@@ -1,26 +1,18 @@
 // Get the current path from URL
 function getCurrentPath() {
-  // Get the full URL
   const fullUrl = window.location.href;
   const baseUrl = window.location.origin;
 
-  // Extract the path after the base URL
   let path = fullUrl.replace(baseUrl, "");
-
-  // Remove query parameters
   path = path.split("?")[0];
-
-  // Remove leading slash
   path = path.replace(/^\/+/, "");
 
-  // Remove the repository name if hosted in subdirectory
   const pathParts = path.split("/");
   if (
     pathParts.length > 1 &&
     pathParts[0] !== "404.html" &&
     !pathParts[0].includes(".")
   ) {
-    // Check if first part is the repo name (common in GitHub Pages)
     const repoName = window.location.pathname.split("/")[1];
     if (pathParts[0] === repoName) {
       pathParts.shift();
@@ -28,7 +20,6 @@ function getCurrentPath() {
     }
   }
 
-  // Remove '404.html' if present
   if (path === "404.html" || path.startsWith("404.html")) {
     path = "";
   }
@@ -52,35 +43,26 @@ async function loadRedirects() {
 }
 
 // Show error 404 page
-function showErrorPage() {
+function showErrorPage(requestedPath) {
+  // Clear existing content
   document.body.innerHTML = `
-        <div class="container">
+        <div class="error-container">
             <div class="error-icon">🔗❌</div>
             <h1>404 - Redirect Not Found</h1>
-            <div class="url-display">📌 ${window.location.href}</div>
-            <div class="message">Sorry, no redirect is configured for this URL path.</div>
+            <div class="url-display">
+                📌 ${window.location.href}
+            </div>
+            <div class="message">
+                No redirect configured for "<strong>${requestedPath}</strong>"
+            </div>
             <div>
-                <button onclick="window.history.back()">← Go Back</button>
-                <button onclick="window.location.href='/'">🏠 Home</button>
+                <button onclick="window.location.href='/'">🏠 Personal Website</button>
             </div>
         </div>
     `;
 
-  // Add styles for error page
-  const style = document.createElement("style");
-  style.textContent = `
-        .error-icon { font-size: 5rem; margin-bottom: 1rem; animation: shake 0.5s ease-in-out; }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-        .url-display { background: rgba(0,0,0,0.3); padding: 0.75rem; border-radius: 5px; font-family: monospace; margin: 1rem 0; word-break: break-all; }
-        .message { margin: 1rem 0; line-height: 1.6; }
-        button { background: rgba(255,255,255,0.2); border: 1px solid white; color: white; padding: 0.6rem 1.2rem; margin: 0.5rem; border-radius: 5px; cursor: pointer; font-size: 1rem; transition: all 0.3s ease; }
-        button:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); }
-    `;
-  document.head.appendChild(style);
+  // Update body class for error page styling
+  document.body.className = "error-body";
 }
 
 // Main redirect logic
@@ -88,21 +70,9 @@ async function handleRedirect() {
   const currentPath = getCurrentPath();
   const statusElement = document.getElementById("status");
 
-  // Skip if it's the home page or empty
+  // If it's the base path (empty), show landing page
   if (!currentPath || currentPath === "") {
-    try {
-      const config = await loadRedirects();
-      if (config.default_redirect) {
-        statusElement.textContent = `Redirecting to default: ${config.default_redirect}`;
-        setTimeout(() => {
-          window.location.href = config.default_redirect;
-        }, config.redirect_delay || 1000);
-      } else {
-        showErrorPage();
-      }
-    } catch (error) {
-      showErrorPage();
-    }
+    window.location.href = "/";
     return;
   }
 
@@ -116,20 +86,20 @@ async function handleRedirect() {
 
       setTimeout(() => {
         window.location.href = redirectUrl;
-      }, config.redirect_delay || 1000);
+      }, config.redirect_delay || 800);
     } else {
       // No redirect found - show 404
       statusElement.textContent = `❌ No redirect found for "${currentPath}"`;
       setTimeout(() => {
-        showErrorPage();
-      }, 1500);
+        showErrorPage(currentPath);
+      }, 1200);
     }
   } catch (error) {
     console.error("Redirect error:", error);
     statusElement.textContent = "❌ Error loading configuration";
     setTimeout(() => {
-      showErrorPage();
-    }, 1500);
+      showErrorPage(currentPath);
+    }, 1200);
   }
 }
 

@@ -4,47 +4,43 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>URL Redirect Service</title>
-    <style>
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-      }
-      .container {
-        text-align: center;
-        padding: 2rem;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
-        backdrop-filter: blur(10px);
-        max-width: 90%;
-        width: 500px;
-      }
-      .loading {
-        font-size: 1.2rem;
-        margin-top: 1rem;
-      }
-      .error {
-        color: #ff6b6b;
-      }
-      .error-icon {
-        font-size: 4rem;
-        margin-bottom: 1rem;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
+  <body class="landing-body">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    <div class="shape shape-4"></div>
+
     <div class="container">
-      <div id="content">
-        <h1>Redirecting...</h1>
-        <div class="loading" id="status">Loading redirect information...</div>
+      <div class="url-badge" id="baseUrl">Loading...</div>
+      <h1>🚀 URL Redirect Service</h1>
+      <div class="subtitle">
+        Smart & Fast URL Shortener with JSON Configuration
+      </div>
+
+      <div class="feature-box">
+        ⚡ Instant Redirects | 🔧 JSON Config | 🎯 100% Free
+      </div>
+
+      <!-- <div class="example">
+        <h3>📝 How to use:</h3>
+        <code id="exampleUrl">https://your-site.github.io/repo/your-key</code>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem">
+          Simply append your redirect key to the URL!
+        </p>
+      </div> -->
+
+      <div class="cta">
+        ✨ Maintained by
+        <a href="/">Riad Hassan</a>
       </div>
     </div>
 
-    <script src="redirect.js"></script>
+    <script>
+      // Display the base URL
+      const baseUrl = window.location.href;
+      document.getElementById("baseUrl").innerHTML = `📍 ${baseUrl}`;
+    </script>
   </body>
 </html>
