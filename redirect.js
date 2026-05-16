@@ -72,7 +72,7 @@ async function handleRedirect() {
 
   // If it's the base path (empty), show landing page
   if (!currentPath || currentPath === "") {
-    window.location.href = "/";
+    window.location.href = "/goto";
     return;
   }
 
