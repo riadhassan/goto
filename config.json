@@ -1,0 +1,10 @@
+{
+  "redirects": {
+    "github": "https://github.com",
+    "google": "https://www.google.com",
+    "docs": "https://docs.google.com",
+    "youtube": "https://www.youtube.com"
+  },
+  "default_redirect": "https://example.com",
+  "redirect_delay": 800
+}
