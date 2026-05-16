@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URL Redirect Service</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+      .container {
+        text-align: center;
+        padding: 2rem;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        backdrop-filter: blur(10px);
+        max-width: 90%;
+        width: 500px;
+      }
+      .loading {
+        font-size: 1.2rem;
+        margin-top: 1rem;
+      }
+      .error {
+        color: #ff6b6b;
+      }
+      .error-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="content">
+        <h1>Redirecting...</h1>
+        <div class="loading" id="status">Loading redirect information...</div>
+      </div>
+    </div>
+
+    <script src="redirect.js"></script>
+  </body>
+</html>
